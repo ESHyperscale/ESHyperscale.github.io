@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2025-11-07 Fri 09:14 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Evolution Strategies at the Hyperscale</title>
+<meta name="author" content="Bidipta Sarkar" />
+<meta name="description" content="General ML Training Made as Fast and Easy as Inference" />
+<meta name="keywords" content="homepage, website, research, AI" />
+<meta name="generator" content="Org Mode" />
+<link rel="icon" type="image/x-icon" href="imgs/favicon.ico">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+<link rel="stylesheet" type="text/css" href="utils/style.css"/>
+<link rel="stylesheet" type="text/css" href="utils/bootstrap.min.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
+<script src="utils/app.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<div id="main" class="container">
+
+<p>
+<div class="row"><h2 class="col-md-12 text-center"><strong><font size="+4r">  Evolution Strategies at the Hyperscale  </font></strong></h2></div><br />
+</p>
+
+
+<div class="row"> <div class="col-md-12 text-center">
+<ul class="org-ul list-inline">
+<li>Bidipta Sarkar*<br /></li>
+<li>Mattie Fellows*<br /></li>
+<li>Juan Agustin Duque*<br /></li>
+<li>Alistair Letcher\(^\dagger\)<br /></li>
+<li>Antonio León Villares\(^\dagger\)<br /></li>
+<li>Anya Sims\(^\dagger\)<br /></li>
+<li>Dylan Cope\(^\dagger\)<br /></li>
+<li>Jarek Liesen\(^\dagger\)<br /></li>
+<li>Lukas Seier\(^\dagger\)<br /></li>
+<li>Theo Wolf\(^\dagger\)<br /></li>
+<li>Uljad Berdica\(^\dagger\)<br /></li>
+<li>Alexander D. Goldie<br /></li>
+<li>Aaron Courville<br /></li>
+<li>Karin Sevegnani<br /></li>
+<li>Shimon Whiteson*<br /></li>
+<li>Jakob Nicolaus Foerster*<br /></li>
+</ul>
+</div> </div>
+
+
+<div class="row"> <div class="col-md-12 text-center">
+<ul class="org-ul list-inline">
+<li><image src="imgs/oxford_logo.png" height="48px"><br /></li>
+<li><image src="imgs/flair_logo.png" height="48px"><br /></li>
+<li><image src="imgs/whirl_logo.png" height="48px"><br /></li>
+<li><image src="imgs/mila_logo.png" height="48px"><br /></li>
+<li><image src="imgs/nvidia_logo.png" height="48px"><br /></li>
+</ul>
+</div> </div>
+
+
+<div class="row"> <div class="col-md-4 col-md-offset-4 text-center">
+<ul class="org-ul nav nav-pills nav-justified">
+<li><a href="https://arxiv.org"><image src="imgs/thumbnail.jpg" height="60px"><h4><strong>Paper</strong></h4></a><br /></li>
+<li><a href="https://github.com/EasyAcademicWebsite/EasyAcademicWebsite.github.io"><image src="imgs/GitHub-Mark.png" height="60px"><h4><strong>Code</strong></h4></a><br /></li>
+<li><a href="https://huggingface.co"><image src="imgs/huggingface.svg" height="60px"><h4><strong>Models</strong></h4></a><br /></li>
+</ul>
+</div></div>
+
+<div class="row"> <div class="col-md-8 col-md-offset-2">
+<div id="outline-container-org95b8a98" class="outline-2">
+<h2 id="org95b8a98"></h2>
+<div class="outline-text-2" id="text-org95b8a98">
+</div>
+<div id="outline-container-orgc707624" class="outline-3">
+<h3 id="orgc707624"></h3>
+<div class="outline-text-3" id="text-orgc707624">
+<p>
+We developed a new hardware-efficient algorithm for evolutionary strategies, making it many orders of magnitude faster than OpenES and 3 times faster than RL. In fact, we bring the barrier of fine-tuning down to the level of inference; i.e. if you can do (batch) inference of a system and evaluate the fitness of the system, you can optimize it with our method with only a 10 to 20% slowdown and no extra VRAM. This makes it an extremely practical method for general ML training, LLM fine-tuning, and optimizing effectively any end-to-end system of neural networks.<br />
+</p>
+
+<p>
+Read our blog post (add link) for more details.<br />
+</p>
+
+
+
+
+</div></div>
+
+</div></div></div>
+
+
+</div>
+<div class="row"><div class="col-md-8 col-md-offset-2"><p class="text-justify">
+<br><br>
+The website template was borrowed from <a href="http://easyacademicwebsite.github.io">Easy Academic Website Template</a> and <a href="http://jonbarron.info/">Jon Barron</a>
+</p></div></div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
