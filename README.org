@@ -79,11 +79,12 @@ Read our blog post (add link) for more details.
 
 #+html: </div></div>
 
-#+html:</div></div></div>
-
+# #+html:</div></div></div>
+#+html:</div></div>
 
 # #+begin_export html
-# <div class="row"><div class="col-md-8 col-md-offset-2">
+# <div class="row">
+# <div class="col-md-8 col-md-offset-2">
 # <h3>Citation</h3>
 # <div class="form-group col-md-10 col-md-offset-1"><textarea id="bibtex" class="form-control" readonly>
 # @inproceedings{NameYearTitle,
@@ -92,7 +93,8 @@ Read our blog post (add link) for more details.
 # 	booktitle={Conference Name},
 # 	year={This Year}
 # }</textarea>
-# </div></div>
+# </div>
+# </div>
 # #+end_export
 
 #+begin_export html	  
