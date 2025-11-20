@@ -26,7 +26,7 @@
 - Lukas Seier$^\dagger$
 - Theo Wolf$^\dagger$
 - Uljad Berdica$^\dagger$
-- Alexander D. Goldie
+- Alexander David Goldie
 - Aaron Courville
 - Karin Sevegnani
 - Shimon Whiteson*
@@ -52,9 +52,10 @@
 
 #+html: <div class="row"> <div class="col-md-4 col-md-offset-4 text-center">
 #+attr_html: :class nav nav-pills nav-justified
-- @@html:<a href="https://arxiv.org"><image src="imgs/thumbnail.jpg" height="60px"><h4><strong>Paper</strong></h4></a>@@
-- @@html:<a href="https://github.com/EasyAcademicWebsite/EasyAcademicWebsite.github.io"><image src="imgs/GitHub-Mark.png" height="60px"><h4><strong>Code</strong></h4></a>@@
-- @@html:<a href="https://huggingface.co"><image src="imgs/huggingface.svg" height="60px"><h4><strong>Models</strong></h4></a>@@
+- @@html:<a href="imgs/paper.pdf"><image src="imgs/thumbnail.jpg" height="60px"><h4><strong>Paper</strong></h4></a>@@
+- @@html:<a href="https://github.com/ESHyperscale/HyperscaleES"><image src="imgs/GitHub-Mark.png" height="60px"><h4><strong>Code</strong></h4></a>@@
+- @@html:<a href="https://github.com/ESHyperscale/nano-egg"><image src="imgs/eggroll.png" height="60px"><h4><strong>Nano-EGG</strong></h4></a>@@
+# - @@html:<a href="https://huggingface.co"><image src="imgs/huggingface.svg" height="60px"><h4><strong>Models</strong></h4></a>@@
 #+html: </div></div>
 
 #+html: <div class="row"> <div class="col-md-8 col-md-offset-2">
@@ -68,20 +69,21 @@
 
 * 
 
-** 
+#+ATTR_HTML: :width 100%
+[[file:imgs/diagram.png]]
 
-We developed a new hardware-efficient algorithm for evolutionary strategies, making it many orders of magnitude faster than OpenES and 3 times faster than RL. In fact, we bring the barrier of fine-tuning down to the level of inference; i.e. if you can do (batch) inference of a system and evaluate the fitness of the system, you can optimize it with our method with only a 10 to 20% slowdown and no extra VRAM. This makes it an extremely practical method for general ML training, LLM fine-tuning, and optimizing effectively any end-to-end system of neural networks.
+** Abstract
 
-Read our blog post (add link) for more details.
-
-
+We introduce Evolution Guided General Optimization via Low-rank Learning (EGGROLL), an evolution strategies (ES) algorithm designed to scale backprop-free optimization to large population sizes for modern large neural network architectures with billions of parameters. ES is a set of powerful blackbox optimisation methods that can handle non-differentiable or noisy objectives with excellent scaling potential through parallelisation. Na{\"i}ve ES becomes prohibitively expensive at scale due to the computational and memory costs associated with generating matrix perturbations $E\in\mathbb{R}^{m\times n}$ and the batched matrix multiplications needed to compute per-member forward passes. EGGROLL overcomes these bottlenecks by generating random matrices $A\in \mathbb{R}^{m\times r},\ B\in \mathbb{R}^{n\times r}$ with $r\ll \min(m,n)$ to form a low-rank matrix perturbation $A B^\top$ that are used in place of the full-rank perturbation $E$. As the overall update is an average across a population of $N$ workers, this still results in a high-rank update but with significant memory and computation savings, reducing the auxiliary storage from $mn$ to $r(m+n)$ per layer and the cost of a forward pass from $\mathcal{O}(mn)$ to $\mathcal{O}(r(m+n))$ when compared to full-rank ES. EGGROLL's efficiency results in a hundredfold increase in training throughput for billion-parameter models at large population sizes, nearly reaching the throughput of pure batch inference. A theoretical analysis reveals our low-rank update converges to the full-rank update at a fast $\mathcal{O}\left(\frac{1}{r}\right)$ rate. Our experiments show that (1) EGGROLL does not compromise the performance of ES in tabula-rasa RL settings, despite being faster, (2) it is competitive with GRPO as a technique for improving LLM reasoning, and (3) EGGROLL enables stable pre-training of nonlinear recurrent language models that operate purely in integer datatypes.
 
 
-#+html: </div></div>
 
-# #+html:</div></div></div>
+
+
+#+html:</div></div></div>
 #+html:</div></div>
 
+#+html:<div>
 # #+begin_export html
 # <div class="row">
 # <div class="col-md-8 col-md-offset-2">
