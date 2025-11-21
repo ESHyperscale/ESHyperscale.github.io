@@ -1,0 +1,276 @@
+p {
+    margin-bottom: 1em;
+    color: #000000;
+    font-weight: 400;
+    text-decoration: none;
+    vertical-align: baseline;
+    font-size: 1.06rem;
+    font-style: normal;
+    line-height: 1.7em;
+    text-align: left;
+    padding: 10px 0px;
+}
+
+h2 {
+    color: #000000;
+    /* font-weight: 700; */
+    text-decoration: none;
+    vertical-align: baseline;
+    font-size: 25pt;
+    font-style: normal;
+
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+h2 > b {
+    color: #000000;
+    font-weight: 700;
+    font-size: 38pt;
+    line-height: 1.15;
+    text-align: left;
+}
+
+
+section {
+    /* padding-top:20.5em */
+    padding-top:14rem;
+}
+
+.step2bullets > .org-ul {
+    /* list-style-type: none; */
+    padding: 0;
+    margin: 0;
+}
+
+.step2bullets > .org-ul > li {
+    /* display: inline-block; */
+    margin-left: 36pt;
+    padding-left: 10pt;
+
+    padding-top: 0pt;
+    padding-bottom: 10pt;
+
+    color: #000000;
+    font-weight: 400;
+    /* text-decoration: none; */
+    vertical-align: baseline;
+    font-size: 1.06rem;
+    font-style: normal;
+    line-height: 1.15;
+    text-align: left;
+}
+
+/* .step2bullets > .org-ul > li::marker { */
+/*     margin-left: -18pt; */
+/*     white-space: nowrap; */
+/*     display: inline-block; */
+/*     min-width: 18pt; */
+/*     content: "\0025cf "; */
+/* } */
+
+
+
+
+
+
+
+
+
+
+
+
+table{
+    border-collapse:collapse;
+    border-spacing:0;
+    empty-cells:show;
+    margin-bottom:24px;
+    border-bottom:1px solid #e1e4e5;
+    width:100%;
+    font-size:1.8em;
+    position:relative;
+}
+
+
+
+td{
+    vertical-align:top}
+
+table td,table th{
+    margin:0;
+    overflow:visible;
+    padding:8px 16px;
+    background-color:white;
+    border:1px solid #e1e4e5;
+}
+
+table thead th{
+    font-weight:bold;
+    border-top:3px solid #e1e4e5;
+    border-bottom:1px solid #e1e4e5;
+}
+
+table caption{
+    color:#000;
+    font:italic 85%/1 arial,sans-serif;
+    padding:1em 0;
+}
+
+table tr:nth-child(2n-1) td{
+    background-color:#f3f6f6;
+}
+
+table tr:nth-child(2n) td{
+    background-color:white;
+}
+
+.codeblock,pre.src,#content .literal-block{
+    font-size:13px;
+    border:1px solid #e1e4e5;
+    padding:12px;
+    background:#fff;
+    margin:1px 0 24px 0;
+    white-space: pre;
+    
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+blockquote{
+    background-color: #F0F0F0;
+    /* border-left:5px solid #CCCCCC; */
+    font-style:italic;
+    line-height:24px;
+    margin:0px 0px 24px 0px;
+    /* margin-left:24px; */
+    padding: 6px 20px;
+}
+
+/* .org-src-container { */
+/*     overflow-y: scroll; */
+/*     overflow-x: scroll; */
+/*     max-height: 100em; */
+/* } */
+
+blockquote > ol {
+    padding: 2em;
+}
+
+/* .step3bullets > .org-ol > li { */
+/*     /\* display: inline-block; *\/ */
+/*     margin-left: 36pt; */
+/*     padding-left: 10pt; */
+
+/*     padding-top: 0pt; */
+/*     padding-bottom: 10pt; */
+
+/*     color: #000000; */
+/*     font-weight: 400; */
+/*     text-decoration: none; */
+/*     vertical-align: baseline; */
+/*     font-size: 14pt; */
+/*     font-style: normal; */
+/*     line-height: 1.15; */
+/*     text-align: left; */
+/* } */
+
+img {
+    width: 50%;
+    image-rendering: pixelated;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.c48 {
+    color: #000000;
+    font-weight: 400;
+    text-decoration: none;
+    vertical-align: baseline;
+    font-size: 17pt;
+    font-style: normal;
+}
+
+
+h3 {
+    color: #000000;
+    font-weight: 700;
+    font-size: 17pt;
+    line-height: 1.15;
+    text-align: left;
+
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+h4:not(#nav-pages-head) {
+    color: #434343;
+    font-weight: 700;
+    font-size: 16pt;
+    line-height: 1.15;
+    text-align: left;
+
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .collapsible:hover {
+    background-color: #ccc;
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.contentx {
+    padding: 0 50px;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    background-color: #f1f1f1;
+    max-height: 0;
+    transition: max-height 0.2s ease-out;
+
+    color: #000000;
+    font-weight: 400;
+    text-decoration: none;
+    vertical-align: baseline;
+    font-size: 13pt;
+    font-style: normal;
+    line-height: 1.15;
+    text-align: left;
+}
+
+.contentlist {
+    white-space: pre;
+}
+
+.footnum {
+    font-size: 1rem;
+}
+
+.footpara {
+    font-size: 1rem;
+}
+
+.footnotes {
+    font-size: 1.06rem;
+}
+
+.outline-3 h3 {
+    width: 100%;
+}
+
+.outline-3 {
+    padding: 0;
+}
