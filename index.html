@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-11-21 Fri 14:33 -->
+<!-- 2025-11-21 Fri 14:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Evolution Strategies at the Hyperscale</title>
@@ -102,25 +102,25 @@
 <li><a href="imgs/paper.pdf"><image src="imgs/thumbnail.jpg" height="60px"><h4><strong>Paper</strong></h4></a><br /></li>
 <li><a href="https://github.com/ESHyperscale/HyperscaleES"><image src="imgs/GitHub-Mark.png" height="60px"><h4><strong>Code</strong></h4></a><br /></li>
 <li><a href="https://github.com/ESHyperscale/nano-egg"><image src="imgs/eggroll.png" height="60px"><h4><strong>Nano-EGG</strong></h4></a><br /></li>
-<li><a href="https://www.alphaxiv.org/abs/2511.16652v1"><image src="https://static.alphaxiv.org/logos/alphaxiv_logo.png" height=60px><h4><strong>Discussion</strong></h4></a><br /></li>
+<li><a href="https://www.alphaxiv.org/abs/2511.16652"><image src="https://static.alphaxiv.org/logos/alphaxiv_logo.png" height=60px><h4><strong>Discussion</strong></h4></a><br /></li>
 <li><a href="blog/index.html"><image src="imgs/blog.png" height="60px"><h4><strong>Blog Post</strong></h4></a><br /></li>
 </ul>
 
 </div></div>
 
 <div class="row"> <div class="col-md-8 col-md-offset-2">
-<div id="outline-container-org62bd8d2" class="outline-2">
-<h2 id="org62bd8d2"></h2>
-<div class="outline-text-2" id="text-org62bd8d2">
+<div id="outline-container-org1b550c8" class="outline-2">
+<h2 id="org1b550c8"></h2>
+<div class="outline-text-2" id="text-org1b550c8">
 
-<div id="org2ef81ed" class="figure">
+<div id="orgc73d7ed" class="figure">
 <p><img src="imgs/diagram.png" alt="diagram.png" width="100%" /><br />
 </p>
 </div>
 </div>
-<div id="outline-container-org9f62493" class="outline-3">
-<h3 id="org9f62493">Abstract</h3>
-<div class="outline-text-3" id="text-org9f62493">
+<div id="outline-container-orge2441e0" class="outline-3">
+<h3 id="orge2441e0">Abstract</h3>
+<div class="outline-text-3" id="text-orge2441e0">
 <p>
 We introduce Evolution Guided General Optimization via Low-rank Learning (EGGROLL), an evolution strategies (ES) algorithm designed to scale backprop-free optimization to large population sizes for modern large neural network architectures with billions of parameters. ES is a set of powerful blackbox optimisation methods that can handle non-differentiable or noisy objectives with excellent scaling potential through parallelisation. Naïve ES becomes prohibitively expensive at scale due to the computational and memory costs associated with generating matrix perturbations \(E\in\mathbb{R}^{m\times n}\) and the batched matrix multiplications needed to compute per-member forward passes. EGGROLL overcomes these bottlenecks by generating random matrices \(A\in \mathbb{R}^{m\times r},\ B\in \mathbb{R}^{n\times r}\) with \(r\ll \min(m,n)\) to form a low-rank matrix perturbation \(A B^\top\) that are used in place of the full-rank perturbation \(E\). As the overall update is an average across a population of \(N\) workers, this still results in a high-rank update but with significant memory and computation savings, reducing the auxiliary storage from \(mn\) to \(r(m+n)\) per layer and the cost of a forward pass from \(\mathcal{O}(mn)\) to \(\mathcal{O}(r(m+n))\) when compared to full-rank ES. EGGROLL's efficiency results in a hundredfold increase in training throughput for billion-parameter models at large population sizes, nearly reaching the throughput of pure batch inference. A theoretical analysis reveals our low-rank update converges to the full-rank update at a fast \(\mathcal{O}\left(\frac{1}{r}\right)\) rate. Our experiments show that (1) EGGROLL does not compromise the performance of ES in tabula-rasa RL settings, despite being faster, (2) it is competitive with GRPO as a technique for improving LLM reasoning, and (3) EGGROLL enables stable pre-training of nonlinear recurrent language models that operate purely in integer datatypes.<br />
 </p>
