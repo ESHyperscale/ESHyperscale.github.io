@@ -55,6 +55,7 @@
 - @@html:<a href="imgs/paper.pdf"><image src="imgs/thumbnail.jpg" height="60px"><h4><strong>Paper</strong></h4></a>@@
 - @@html:<a href="https://github.com/ESHyperscale/HyperscaleES"><image src="imgs/GitHub-Mark.png" height="60px"><h4><strong>Code</strong></h4></a>@@
 - @@html:<a href="https://github.com/ESHyperscale/nano-egg"><image src="imgs/eggroll.png" height="60px"><h4><strong>Nano-EGG</strong></h4></a>@@
+- @@html:<a href="https://www.alphaxiv.org/abs/2511.16652v1"><image src="https://static.alphaxiv.org/logos/alphaxiv_logo.png" height=60px><h4><strong>Discussion</strong></h4></a>@@
 # - @@html:<a href="https://huggingface.co"><image src="imgs/huggingface.svg" height="60px"><h4><strong>Models</strong></h4></a>@@
 #+html: </div></div>
 
