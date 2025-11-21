@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-11-21 Fri 14:30 -->
+<!-- 2025-11-21 Fri 15:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Evolution Strategies at the Hyperscale</title>
@@ -71,9 +71,9 @@
 
 
 <div><div><div><div><div class="content_inner"><section id="home"></section></div></div>
-<div id="outline-container-org1b1ca2d" class="outline-2">
-<h2 id="org1b1ca2d"><b>Evolution Strategies at the Hyperscale</b></h2>
-<div class="outline-text-2" id="text-org1b1ca2d">
+<div id="outline-container-org116bd64" class="outline-2">
+<h2 id="org116bd64"><b>Evolution Strategies at the Hyperscale</b></h2>
+<div class="outline-text-2" id="text-org116bd64">
 <p class="c48">General ML Training Made as Fast and Easy as Inference</p><hr>
 
 <p>
@@ -82,6 +82,12 @@
 </p>
 
 <img src="header.png" style="width:100%;image-rendering:auto;">
+
+<blockquote>
+<p>
+TL;DR: We introduce <b>EGGROLL</b>, a novel general-purpose machine learning algorithm that provides a <b>hundredfold increase in training speed</b> over naive evolution strategies. EGGROLL practically <b>eliminates</b> the barrier between inference and training, allowing us to easily fine-tune LLMs for reasoning or train new architectures from scratch.<br />
+</p>
+</blockquote>
 
 <p>
 We are excited to introduce EGGROLL, a general-purpose algorithm for training ML systems (including LLMs) that nearly matches the speed and resource requirements of batched inference, giving a <b>hundredfold increase in training throughput</b> over standard ES for billion-parameter models at large population sizes. EGGROLL is a variant of <a href="https://lilianweng.github.io/posts/2019-09-05-evolution-strategies/">Evolution Strategies</a> (ES) that uses low-rank perturbations of the model parameters to generate full-rank parameter updates.<sup><a id="fnr.large_enough" class="footref" href="#fn.large_enough" role="doc-backlink">1</a></sup><br />
@@ -111,9 +117,9 @@ This is an early research checkpoint of our work. We will continue iterating on 
 </p>
 </div>
 </div>
-<div id="outline-container-org8695c10" class="outline-2">
-<h2 id="org8695c10">What is EGGROLL</h2>
-<div class="outline-text-2" id="text-org8695c10">
+<div id="outline-container-orgc254448" class="outline-2">
+<h2 id="orgc254448">What is EGGROLL</h2>
+<div class="outline-text-2" id="text-orgc254448">
 <p><b>EGGROLL</b> stands for <b>E</b>volution <b>G</b>uided <b>G</b>ene<b>r</b>al <b>O</b>ptimization via <b>L</b>ow-rank <b>L</b>earning. The method is illustrated in the figure below</p>
 
 <img src="diagram.png" style="width:100%;image-rendering:auto;">
@@ -181,9 +187,9 @@ Note that although individual perturbations are low-rank, the expression on the 
 </p>
 </div>
 </div>
-<div id="outline-container-org726fdd8" class="outline-2">
-<h2 id="org726fdd8">Training an EGG: Pure Integer Pretraining of a Nonlinear RNN with No Activation Functions</h2>
-<div class="outline-text-2" id="text-org726fdd8">
+<div id="outline-container-orgbdc6b27" class="outline-2">
+<h2 id="orgbdc6b27">Training an EGG: Pure Integer Pretraining of a Nonlinear RNN with No Activation Functions</h2>
+<div class="outline-text-2" id="text-orgbdc6b27">
 <p>
 To highlight the strength and flexibility of EGGROLL, we wanted to demonstrate that it can be used for training architectures that would previously be impractical or extremely difficult with typical backprop. We therefore work under the following constraints:<br />
 </p>
@@ -221,9 +227,9 @@ We are actively working on scaling up training to larger population sizes and te
 </p>
 </div>
 </div>
-<div id="outline-container-org0539058" class="outline-2">
-<h2 id="org0539058">LLM Reasoning</h2>
-<div class="outline-text-2" id="text-org0539058">
+<div id="outline-container-orge1d5ce2" class="outline-2">
+<h2 id="orge1d5ce2">LLM Reasoning</h2>
+<div class="outline-text-2" id="text-orge1d5ce2">
 <p>
 In addition to our EGG model, we find that EGGROLL is a generally strong method for LLM fine-tuning. In particular, to highlight the scalability of our method, we do standard LLM "reasoning" training on the RWKV-7 language models with billions of parameters.<br />
 </p>
@@ -259,9 +265,9 @@ We also train our model on GSM8K and find that we outperform GRPO:<br />
 <img src="gsm8k_medium.png" style="width:80%;image-rendering:auto;">
 </div>
 </div>
-<div id="outline-container-org95be405" class="outline-2">
-<h2 id="org95be405">Next Steps</h2>
-<div class="outline-text-2" id="text-org95be405">
+<div id="outline-container-orgd4463b0" class="outline-2">
+<h2 id="orgd4463b0">Next Steps</h2>
+<div class="outline-text-2" id="text-orgd4463b0">
 <p>
 We are actively working on testing EGGROLL on more reasoning tasks and other potential language model architectures. We are particularly interested in the end-to-end optimization of <i>neurosymbolic systems</i>, since EGGROLL naturally handles nondifferentiable components within a model. Specifically, we think that EGGROLL has strong potential to optimize discrete memory systems like the <a href="https://x.com/BlinkDL_AI/status/1976912771985146184">ROSA architecture for RWKV-8</a> or directly optimize LLMs with multi-agent awareness, breaking the <a href="https://limit-of-rlvr.github.io/">best-of-k curse of RL</a>.<br />
 </p>
@@ -271,9 +277,9 @@ If you have any questions, feel free to reach out on our <a href="https://www.al
 </p>
 </div>
 </div>
-<div id="outline-container-org193bd5a" class="outline-2">
-<h2 id="org193bd5a"></h2>
-<div class="outline-text-2" id="text-org193bd5a">
+<div id="outline-container-orgf6a84c8" class="outline-2">
+<h2 id="orgf6a84c8"></h2>
+<div class="outline-text-2" id="text-orgf6a84c8">
 </div><div><div class="footer"><p id="copyright">&copy; 2025 Bidipta Sarkar</p></div></div>
 </div>
 </div>

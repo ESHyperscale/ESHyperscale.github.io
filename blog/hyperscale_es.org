@@ -51,6 +51,10 @@
 
 #+html: <img src="header.png" style="width:100%;image-rendering:auto;">
 
+#+begin_quote
+TL;DR: We introduce *EGGROLL*, a novel general-purpose machine learning algorithm that provides a *hundredfold increase in training speed* over naive evolution strategies. EGGROLL practically *eliminates* the barrier between inference and training, allowing us to easily fine-tune LLMs for reasoning or train new architectures from scratch.
+#+end_quote
+
 We are excited to introduce EGGROLL, a general-purpose algorithm for training ML systems (including LLMs) that nearly matches the speed and resource requirements of batched inference, giving a *hundredfold increase in training throughput* over standard ES for billion-parameter models at large population sizes. EGGROLL is a variant of [[https://lilianweng.github.io/posts/2019-09-05-evolution-strategies/][Evolution Strategies]] (ES) that uses low-rank perturbations of the model parameters to generate full-rank parameter updates.[fn:large_enough]
 
 As an ES variant, EGGROLL is general enough to optimize the model parameters within any inference system. Thanks to its increased efficiency, EGGROLL effectively *eliminates* the barrier between inference and training. Specifically, if you can perform /batched LoRA inference/ on a system and define a /fitness/ function, which specifies the relative performance of a neural network system on a task, EGGROLL can optimize all the parameters of that system to maximize the fitness function.
