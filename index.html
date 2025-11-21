@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-11-21 Fri 14:35 -->
+<!-- 2025-11-21 Fri 16:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Evolution Strategies at the Hyperscale</title>
@@ -11,6 +11,8 @@
 <meta name="description" content="General ML Training Made as Fast and Easy as Inference" />
 <meta name="keywords" content="homepage, website, research, AI" />
 <meta name="generator" content="Org Mode" />
+<script src="https://kit.fontawesome.com/1eb1a53221.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="./style.css"/>
 <link rel="icon" type="image/x-icon" href="imgs/favicon.ico">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -57,6 +59,21 @@
 </head>
 <body>
 <div id="content" class="content">
+<script>
+  function toggleCollapse(c) {
+    console.log("WOW");
+    c.classList.toggle("active");
+    console.log("WOW2");
+    var content = c.nextElementSibling;
+    console.log(content);
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + 20 + "px";
+    }
+  }
+</script>
+
 <div id="main" class="container">
 
 <p>
@@ -103,33 +120,227 @@
 <li><a href="https://github.com/ESHyperscale/HyperscaleES"><image src="imgs/GitHub-Mark.png" height="60px"><h4><strong>Code</strong></h4></a><br /></li>
 <li><a href="https://github.com/ESHyperscale/nano-egg"><image src="imgs/eggroll.png" height="60px"><h4><strong>Nano-EGG</strong></h4></a><br /></li>
 <li><a href="https://www.alphaxiv.org/abs/2511.16652"><image src="https://static.alphaxiv.org/logos/alphaxiv_logo.png" height=60px><h4><strong>Discussion</strong></h4></a><br /></li>
-<li><a href="blog/index.html"><image src="imgs/blog.png" height="60px"><h4><strong>Blog Post</strong></h4></a><br /></li>
 </ul>
 
 </div></div>
 
 <div class="row"> <div class="col-md-8 col-md-offset-2">
-<div id="outline-container-org1b550c8" class="outline-2">
-<h2 id="org1b550c8"></h2>
-<div class="outline-text-2" id="text-org1b550c8">
+<div id="outline-container-org4a87fca" class="outline-2">
+<h2 id="org4a87fca"></h2>
+<div class="outline-text-2" id="text-org4a87fca">
 
-<div id="orgc73d7ed" class="figure">
+<div id="org26fa743" class="figure">
 <p><img src="imgs/diagram.png" alt="diagram.png" width="100%" /><br />
 </p>
 </div>
+
+<blockquote>
+<p>
+TL;DR: We introduce <b>EGGROLL</b>, a novel general-purpose machine learning algorithm that provides a <b>hundredfold increase in training speed</b> over naïve evolution strategies. EGGROLL practically <b>eliminates</b> the barrier between inference and training, allowing us to easily fine-tune LLMs for reasoning or train new architectures from scratch.<br />
+</p>
+</blockquote>
 </div>
-<div id="outline-container-orge2441e0" class="outline-3">
-<h3 id="orge2441e0">Abstract</h3>
-<div class="outline-text-3" id="text-orge2441e0">
+<div id="outline-container-orgb543e3d" class="outline-3">
+<h3 id="orgb543e3d">Abstract</h3>
+<div class="outline-text-3" id="text-orgb543e3d">
 <p>
 We introduce Evolution Guided General Optimization via Low-rank Learning (EGGROLL), an evolution strategies (ES) algorithm designed to scale backprop-free optimization to large population sizes for modern large neural network architectures with billions of parameters. ES is a set of powerful blackbox optimisation methods that can handle non-differentiable or noisy objectives with excellent scaling potential through parallelisation. Naïve ES becomes prohibitively expensive at scale due to the computational and memory costs associated with generating matrix perturbations \(E\in\mathbb{R}^{m\times n}\) and the batched matrix multiplications needed to compute per-member forward passes. EGGROLL overcomes these bottlenecks by generating random matrices \(A\in \mathbb{R}^{m\times r},\ B\in \mathbb{R}^{n\times r}\) with \(r\ll \min(m,n)\) to form a low-rank matrix perturbation \(A B^\top\) that are used in place of the full-rank perturbation \(E\). As the overall update is an average across a population of \(N\) workers, this still results in a high-rank update but with significant memory and computation savings, reducing the auxiliary storage from \(mn\) to \(r(m+n)\) per layer and the cost of a forward pass from \(\mathcal{O}(mn)\) to \(\mathcal{O}(r(m+n))\) when compared to full-rank ES. EGGROLL's efficiency results in a hundredfold increase in training throughput for billion-parameter models at large population sizes, nearly reaching the throughput of pure batch inference. A theoretical analysis reveals our low-rank update converges to the full-rank update at a fast \(\mathcal{O}\left(\frac{1}{r}\right)\) rate. Our experiments show that (1) EGGROLL does not compromise the performance of ES in tabula-rasa RL settings, despite being faster, (2) it is competitive with GRPO as a technique for improving LLM reasoning, and (3) EGGROLL enables stable pre-training of nonlinear recurrent language models that operate purely in integer datatypes.<br />
+</p>
+</div>
+</div>
+<div id="outline-container-orgc2b2329" class="outline-3">
+<h3 id="orgc2b2329">Overview</h3>
+<div class="outline-text-3" id="text-orgc2b2329">
+<img src="blog/header.png" style="width:100%;image-rendering:auto;">
+
+<p>
+We are excited to introduce EGGROLL, a general-purpose algorithm for training ML systems (including LLMs) that nearly matches the speed and resource requirements of batched inference, giving a <b>hundredfold increase in training throughput</b> over standard ES for billion-parameter models at large population sizes. EGGROLL is a variant of <a href="https://lilianweng.github.io/posts/2019-09-05-evolution-strategies/">Evolution Strategies</a> (ES) that uses low-rank perturbations of the model parameters to generate full-rank parameter updates,<sup><a id="fnr.large_enough" class="footref" href="#fn.large_enough" role="doc-backlink">1</a></sup> making it more expressive than naïve ES on LoRA adapters without compromising speed.<br />
+</p>
+
+<p>
+As an ES variant, EGGROLL is general enough to optimize the model parameters within any inference system. Thanks to its increased efficiency, EGGROLL effectively <b>eliminates</b> the barrier between inference and training. Specifically, if you can perform <i>batched LoRA inference</i> on a system and define a <i>fitness</i> function, which specifies the relative performance of a neural network system on a task, EGGROLL can optimize all the parameters of that system to maximize the fitness function.<br />
+</p>
+
+<p>
+In the rest of this blog post, we describe the EGGROLL algorithm and highlight experimental results on high-throughput pretraining of a <i>pure integer</i> nonlinear RNN language model that uses <i>no activation functions</i>, a task that is only made feasible by EGGROLL. We also demonstrate its potential as an RL alternative by training RWKV7 models on the countdown and gsm8k reasoning tasks.<br />
+</p>
+
+<p>
+To accompany this blog post, we also release:<br />
+</p>
+<div class="step2bullets">
+<ul class="org-ul">
+<li>A <a href="https://www.alphaxiv.org/abs/2511.16652">full paper</a> detailing our theory and experimental results.<br /></li>
+<li>A <a href="https://github.com/ESHyperscale/HyperscaleES">jax-based experimental neural network library</a> to use EGGROLL on custom settings, along with starter code for training the RWKV language model.<br /></li>
+<li>A <a href="https://github.com/ESHyperscale/nano-egg">single-file implementation of pure int8 language model training</a>. We highly encourage community contributions, similar to the <a href="https://github.com/KellerJordan/modded-nanogpt/tree/master">nanogpt speedrun</a>, to see how efficient we can make pure evolution pretraining in integer formats!<br /></li>
+</ul>
+</div>
+
+<p>
+This is an early research checkpoint of our work. We will continue iterating on our methods and results, but we wanted to share these results early with the community to get feedback and more thoughts. We will be actively monitoring our <a href="https://www.alphaxiv.org/abs/2511.16652">alphaxiv discussion</a> page, so please add comments and questions there.<br />
+</p>
+</div>
+</div>
+<div id="outline-container-org65af880" class="outline-3">
+<h3 id="org65af880">What is EGGROLL</h3>
+<div class="outline-text-3" id="text-org65af880">
+<p><b>EGGROLL</b> stands for <b>E</b>volution <b>G</b>uided <b>G</b>ene<b>r</b>al <b>O</b>ptimization via <b>L</b>ow-rank <b>L</b>earning. The method is illustrated in the topmost figure.</p>
+
+<p>
+To explain each part of the acronym, we will first give a brief overview on how <b>Evolution Strategies</b> works; for a more complete description of the history and variants, we highly recommend <a href="https://lilianweng.github.io/posts/2019-09-05-evolution-strategies/">Lilian Weng's blog post on ES</a>.<br />
+</p>
+
+<p>
+Evolution Strategies work by directly optimizing the parameters of a neural network by sampling random perturbations and shifting the parameters towards the perturbations that give the best fitness. Mathematically, OpenAI's ES formulation is represented as:<br />
+</p>
+
+<p>
+\[\nabla_{\theta}\mathbb{E}_{\epsilon\sim N(0,I)} F(\theta+\sigma\epsilon) = \frac{1}{\sigma}\mathbb{E}_{\epsilon\sim N(0,I)}\{F(\theta+\sigma\epsilon)\epsilon\}\]<br />
+</p>
+
+<p>
+where \(F\) is the fitness function, which measures how good a specific set of parameters are at the task at hand similar to the reward function in RL, \(\theta\) are the parameters you are optimizing, and \(\sigma\) is the standard deviation of the noise to add to the parameters.<br />
+</p>
+
+<p>
+In OpenAI's Evolution Strategies, we sample from a normal distribution independently for each parameter. In jax, this can be represented as follows for a standard matrix multiplication, where thread_id is the index of the population member you are evaluating:<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="linenr">1: </span><span style="color: #C678DD;">def</span> <span style="color: #61AFEF;">forward</span>(base_perturbation_key, sigma, parameter, x, thread_id):
+<span class="linenr">2: </span>    <span style="color: #E06C75;">key</span> = jax.random.fold_in(base_perturbation_key, thread_id)
+<span class="linenr">3: </span>    <span style="color: #E06C75;">perturbation</span> = jax.random.normal(key, parameter.shape) * sigma
+<span class="linenr">4: </span>    <span style="color: #C678DD;">return</span> x @ (parameter + perturbation).T
+<span class="linenr">5: </span>
+<span class="linenr">6: </span><span style="color: #E06C75;">batch_forward</span> = jax.vmap(forward, in_axes=(<span style="color: #56B6C2;">None</span>, <span style="color: #56B6C2;">None</span>, <span style="color: #56B6C2;">None</span>, 0, 0))
+</pre>
+</div>
+
+<p>
+Note that standard matrix multiplication has now turned into a batched matrix multiplication, which is extremely inefficient on GPUs for large matrices and large populations.<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup><br />
+</p>
+
+<p>
+Our approach is instead to structure our perturbations to explicitly be low-rank. This enables us to do a large standard matrix multiplication, alongside a batched vector-vector multiplication and batched scalar-vector multipliation at rank 1. This is extremely fast and scalable, giving us the throughput curves in the headline image (less than 10% slower than pure non-lora inference). In jax, this is represented as:<br />
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span class="linenr">1: </span><span style="color: #C678DD;">def</span> <span style="color: #61AFEF;">forward</span>(base_perturbation_key, sigma, parameter, x, thread_id, rank=1):
+<span class="linenr">2: </span>    <span style="color: #E06C75;">key</span> = jax.random.fold_in(base_perturbation_key, thread_id)
+<span class="linenr">3: </span>    <span style="color: #E06C75;">a</span>, <span style="color: #E06C75;">b</span> = parameter.shape
+<span class="linenr">4: </span>    <span style="color: #E06C75;">perturbation</span> = jax.random.normal(key, (a+b, rank))
+<span class="linenr">5: </span>    <span style="color: #E06C75;">B</span> = lora_params[:b]  <span style="color: #5C6370; font-style: italic;"># </span><span style="color: #5C6370; font-style: italic;">b x r</span>
+<span class="linenr">6: </span>    <span style="color: #E06C75;">A</span> = lora_params[b:]  <span style="color: #5C6370; font-style: italic;"># </span><span style="color: #5C6370; font-style: italic;">a x r</span>
+<span class="linenr">7: </span>    <span style="color: #C678DD;">return</span> x @ parameter.T + x @ B @ A.T * sigma
+<span class="linenr">8: </span>
+<span class="linenr">9: </span><span style="color: #E06C75;">batch_forward</span> = jax.vmap(forward, in_axes=(<span style="color: #56B6C2;">None</span>, <span style="color: #56B6C2;">None</span>, <span style="color: #56B6C2;">None</span>, 0, 0))
+</pre>
+</div>
+
+<p>
+In the limit as rank increases,<sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup> the "gradient" estimate just standard ES with the structured matrix:<br />
+</p>
+
+<p>
+\[ \nabla_{\theta}\mathbb{E}_{\epsilon_1, \epsilon_2 \sim N(0,I_{d})} F(\theta+\sigma\epsilon_2 \epsilon_1^T) = \frac{1}{\sigma}\mathbb{E}_{\epsilon_1,\epsilon_2\sim N(0,I_{d})}\{F(\theta+\sigma\epsilon_2 \epsilon_1^T)\epsilon_2 \epsilon_1^T\} \]<br />
+</p>
+
+<p>
+Note that although individual perturbations are low-rank, the expression on the right side is actually high-rank, due to the properties of sums of low-rank matrices. We directly fuse this high rank update into the parameters at each update step. In comparison, using ES to directly optimize LoRA matrices will still be restricted to a low-rank update regardless of the population size, which may be <a href="https://thinkingmachines.ai/blog/lora/">enough for LLM reasoning</a> but not sufficient for pretraining or supervised fine-tuning.<br />
+</p>
+</div>
+</div>
+<div id="outline-container-orgabae16f" class="outline-3">
+<h3 id="orgabae16f">Training an EGG: Pure Integer Pretraining of a Nonlinear RNN with No Activation Functions</h3>
+<div class="outline-text-3" id="text-orgabae16f">
+<p>
+To highlight the strength and flexibility of EGGROLL, we wanted to demonstrate that it can be used for training architectures that would previously be impractical or extremely difficult with typical backprop. We therefore work under the following constraints:<br />
+</p>
+
+<p>
+<b>Pure Integer Training.</b> Although prior work, like <a href="https://arxiv.org/abs/2310.11453">BitNet</a>, does quantization-aware training, we propose <i>end-to-end</i> training with pure integer datatypes. This means storing all weights in int8, as this is the fastest supported datatype on <a href="https://www.nvidia.com/en-gb/data-center/h100/">H100s</a>, and <i>only</i> using integer operations and lookup tables, including layernorms and the softmax operation for the loss calculation.<br />
+</p>
+
+<p>
+<b>Nonlinear RNN.</b> Modern language models require sequence-parallel architectures, like Transformers or state-space models, in order to avoid expensive backpropagation through time. However, these sequence-parallel architectures are unable to handle <a href="https://arxiv.org/abs/2404.08819">simple state-tracking</a>, while older RNNs, like LSTMs and GRUs, can handle these with only a single layer. We use a custom variant of <a href="https://arxiv.org/abs/1701.03452">minGRU</a> to demonstrate that sequence-parallelism is not needed for evolution, just a very large batch size to process multiple token sequences in parallel. With evolution, we can optimize for any sequence length without increasing memory requirements and take multiple updates within a single sequence using <a href="https://arxiv.org/abs/2304.12180v2">Noise-Reuse ES</a>.<br />
+</p>
+
+<p>
+<b>Removal of ALL Activation Functions.</b> Inspired by prior work that uses ES to <a href="https://openai.com/index/nonlinear-computation-in-deep-linear-networks/">exploit the nonlinear dynamics of floating-point operations</a>, we realize that the int8 tensor multiplication (with int32 accumulation) becomes a nonlinear operation when casting back to int8 due to its limited dynamic range. Therefore, we remove all activation functions from our MLP blocks and use no nonlinearities for the minGRU block, removing the tanh and sigmoid.<br />
+</p>
+
+<p>We name our architecture the <b>E</b>volved <b>G</b>enerative <b>G</b>ru, or <b>EGG</b> for short.</p>
+
+<p>
+To optimize EGG with EGGROLL, we keep the core infrastructure, but we make slight modifications to the optimization process. In particular, instead of taking arbitrarily large updates, we check if the update is larger than some threshold before pushing it one step in that direction. We do not use any dedicated optimizer states, like momentum, but this would be an interesting future direction.<br />
+</p>
+
+<p>
+To test our architecture and method, we trained a small D256-L6 parameter model to perform character-level language modeling on the <a href="https://huggingface.co/datasets/JeanKaddour/minipile">MiniPile</a> dataset, feeding 100 tokens per population member per update step, achieving 10 million tokens per second on a single H100. Our final loss curves are in the header figure of this blog post. We see that an 8 times larger population size results in a drop in loss of 0.4 bits/byte, where the largest population size achieves a test loss of 3.41 bits/byte. Note that the population size we use is \(2^{18}=262144\), which is <b>two orders of magnitude larger</b> than population size used in <a href="https://arxiv.org/abs/1703.03864">OpenAI's ES work</a>.<br />
+</p>
+
+<p>
+We also see that ES can be very data efficient. In particular, if each training sequence is shared among 512 members of the population (solid lines in the figure below), we get similar performance to only sharing among pairs (dashed lines) when the population size is large enough.<br />
+</p>
+
+<img src="blog/data_efficient_pretrain_loss.png" style="width:100%;image-rendering:auto;">
+
+<p>
+We are actively working on scaling up training to larger population sizes and testing out alternative architectures. If you'd like to learn more and contribute to the development of this esoteric model, check out our <a href="https://github.com/ESHyperscale/nano-egg">single-file codebase</a>.<br />
+</p>
+</div>
+</div>
+<div id="outline-container-orgc6f5d91" class="outline-3">
+<h3 id="orgc6f5d91">LLM Reasoning</h3>
+<div class="outline-text-3" id="text-orgc6f5d91">
+<p>
+In addition to our EGG model, we find that EGGROLL is a generally strong method for LLM fine-tuning. In particular, to highlight the scalability of our method, we do standard LLM "reasoning" training on the RWKV-7 language models with billions of parameters.<br />
+</p>
+
+<button type="button" class="collapsible" onclick="toggleCollapse(this)">Why RWKV?</button>
+<div class="contentx">
+<p>
+We wanted a language model that is easy to implement in jax without worrying about dynamic state sizes while having high throughput. Transformers are painful to implement in jax due to the growing size of the KV-cache, which would bottleneck the total number of generations we can have in parallel. Recurrent models are more ideal, and since we already built the <a href="https://github.com/bsarkar321/jaxrwkv">jaxrwkv codebase</a> it was trivial to port it to our EGGROLL library.<br />
+</p>
+
+<p>
+Furthermore, we already have significant experience using RWKV-based models for RL, as we were the first to implement multi-agent, multi-turn learning in a true embodied environment using RWKV in the game of Among Us (see <a href="https://socialdeductionllm.github.io/">here</a>). The same reasons for using RWKV presented in that paper apply here: we want to generate trajectories with constant time and space complexity per token and the latest RWKV7 "Goose" models, which have reasoning traces in their pretraining corpus but otherwise do not do any SFT or RL, are very strong starting points for our reasoning experiments.<br />
+</p>
+
+<p>
+We are actively working on a vLLM and Megatron port with advisors from NVIDIA, which would enable us to try EGGROLL on other LLMs, including Discrete Diffusion models for which the standard policy gradient theorem is technically intractable (due to the mask-based sampling procedure).<br />
+</p>
+</div>
+
+<p>
+We first test our method on the countdown task to compare against the core results of the concurrent paper on <a href="https://arxiv.org/abs/2509.24372">ES with LLMs</a>.<sup><a id="fnr.4" class="footref" href="#fn.4" role="doc-backlink">4</a></sup> On the RWKV 1.5B model, we outperform the GRPO baseline, landing between the reported results of LLaMA-3.2 1B and Qwen 2.5 1.5B:<br />
+</p>
+<img src="blog/countdown_small.png" style="width:80%;image-rendering:auto;">
+
+<p>
+For the 7B model, we outperform all reported results from the other paper despite starting from a weaker base model:<br />
+</p>
+<img src="blog/countdown_medium.png" style="width:80%;image-rendering:auto;">
+
+<p>
+We also train our model on GSM8K and find that we outperform GRPO:<br />
+</p>
+<img src="blog/gsm8k_medium.png" style="width:80%;image-rendering:auto;">
+</div>
+</div>
+<div id="outline-container-orgab42b43" class="outline-3">
+<h3 id="orgab42b43">Next Steps</h3>
+<div class="outline-text-3" id="text-orgab42b43">
+<p>
+We are actively working on testing EGGROLL on more reasoning tasks and other potential language model architectures. We are particularly interested in the end-to-end optimization of <i>neurosymbolic systems</i>, since EGGROLL naturally handles nondifferentiable components within a model. Specifically, we think that EGGROLL has strong potential to optimize discrete memory systems like the <a href="https://x.com/BlinkDL_AI/status/1976912771985146184">ROSA architecture for RWKV-8</a> or directly optimize LLMs with multi-agent awareness, breaking the <a href="https://limit-of-rlvr.github.io/">best-of-k curse of RL</a>.<br />
+</p>
+
+<p>
+If you have any questions, feel free to reach out on our <a href="https://www.alphaxiv.org/abs/2511.16652">alphaxiv discussion page</a> or open issues on our <a href="https://github.com/ESHyperscale/HyperscaleES">github repo</a>.<br />
 </p>
 
 
 
-
-
-</div></div></div>
+</div></div>
 </div></div>
 
 <div class="row">
@@ -148,14 +359,37 @@ We introduce Evolution Guided General Optimization via Low-rank Learning (EGGROL
 </div>
 </div>
 
-</div>
+
+
 <div class="row"><div class="col-md-8 col-md-offset-2"><p class="text-justify">
 <br><br>
-The website template was borrowed from <a href="http://easyacademicwebsite.github.io">Easy Academic Website Template</a> and <a href="http://jonbarron.info/">Jon Barron</a>. <a href="https://www.flaticon.com/free-icons/blog" title="blog icons">Blog icons created by Freepik - Flaticon</a>
+The website template was borrowed from <a href="http://easyacademicwebsite.github.io">Easy Academic Website Template</a> and <a href="http://jonbarron.info/">Jon Barron</a>.
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.large_enough" class="footnum" href="#fnr.large_enough" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Full-rank parameter updates can occur when the population size is at least as big as the hidden dimension of the model.<br />
 </p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+The concurrent work on <a href="https://arxiv.org/abs/2509.24372">ES on LLMs</a> avoided this issue by having a very small population size, rolling out hundreds of samples for each member of the population to get a better fitness estimate and running a small number of population members on the GPU at any one time, turning the batched matrix multiplication back into regular matrix multiplication. However, we would like to have the flexibility to choose between having multiple rollouts per population member versus having more population members overall.<br />
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+The theory claims that this is the gradient estimate at the limit as rank increases, and we empirically find that this continues to be strong even at rank 1.<br />
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Our first public github commit of an early version of EGGROLL is <a href="https://github.com/bsarkar321/jaxrwkv/commit/6d92566eacc2c8c12a946b3e2a3d832dbc1e63fe">here</a>, on Aug 13.<br />
+</p></div></div>
+
+
 </div>
-</div>
-</div>
-</div>
+</div></div>
 </body>
 </html>
